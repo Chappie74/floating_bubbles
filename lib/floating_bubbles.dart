@@ -30,3 +30,4 @@
 library floating_bubbles;
 
 export 'src/bubbles.dart';
+export 'src/range.dart';
