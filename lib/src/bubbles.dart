@@ -120,11 +120,9 @@ class _FloatingBubblesState extends State<FloatingBubbles> {
           random,
           color: widget
               .colorsOfBubbles[_random.nextInt(widget.colorsOfBubbles.length)],
-          opacity: widget.opacity?.min ??
-              70 +
-                  _random.nextInt(
-                    widget.opacity?.max ?? 255 - (widget.opacity?.min ?? 70),
-                  ),
+          opacity: _random.nextInt(
+                  (widget.opacity?.max ?? 255) - (widget.opacity?.min ?? 70)) +
+              (widget.opacity?.min ?? 70),
         ),
       );
     }

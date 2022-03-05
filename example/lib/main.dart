@@ -23,10 +23,10 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    eachFrame()
-        .take(10000)
-        .transform(const ComputeFps())
-        .listen((fps) => print('fps: $fps'));
+    // eachFrame()
+    //     .take(10000)
+    //     .transform(const ComputeFps())
+    //     .listen((fps) => print('fps: $fps'));
     return Stack(
       children: [
         Positioned.fill(
@@ -41,6 +41,7 @@ class HomePage extends StatelessWidget {
               Colors.white,
               Colors.red,
             ],
+            opacity: IntRange(min: 70, max: 255),
             sizeFactor: 0.2,
             paintingStyle: PaintingStyle.fill,
             shape: BubbleShape.circle, //This is the default
