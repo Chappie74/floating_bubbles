@@ -42,7 +42,6 @@ class HomePage extends StatelessWidget {
               Colors.red,
             ],
             sizeFactor: 0.2,
-            opacity: 70,
             paintingStyle: PaintingStyle.fill,
             shape: BubbleShape.circle, //This is the default
           ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:floating_bubbles/src/range.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_animations/simple_animations.dart';
 
@@ -33,7 +34,7 @@ class FloatingBubbles extends StatefulWidget {
   int? duration;
 
   /// Opacity of the bubbles. Can take the value between 0 to 255.
-  final int opacity;
+  final IntRange? opacity;
 
   /// Painting Style of the bubbles.
   final PaintingStyle paintingStyle;
@@ -56,7 +57,7 @@ class FloatingBubbles extends StatefulWidget {
     required this.sizeFactor,
     required this.duration,
     this.shape = BubbleShape.circle,
-    this.opacity = 100,
+    this.opacity,
     this.paintingStyle = PaintingStyle.fill,
     this.strokeWidth = 0,
   })  : assert(
@@ -70,10 +71,6 @@ class FloatingBubbles extends StatefulWidget {
         assert(duration != null && duration >= 0,
             'duration should not be null or less than 0.'),
         assert(
-          opacity >= 0 && opacity <= 255,
-          'opacity value should be between 0 and 255 inclusive.',
-        ),
-        assert(
           colorsOfBubbles.isNotEmpty,
           'at least one color must be specified',
         );
@@ -85,7 +82,7 @@ class FloatingBubbles extends StatefulWidget {
     required this.colorsOfBubbles,
     required this.sizeFactor,
     this.shape = BubbleShape.circle,
-    this.opacity = 60,
+    this.opacity,
     this.paintingStyle = PaintingStyle.fill,
     this.strokeWidth = 0,
   })  : assert(
@@ -95,10 +92,6 @@ class FloatingBubbles extends StatefulWidget {
         assert(
           sizeFactor > 0 && sizeFactor < 0.5,
           'Size factor cannot be greater than 0.5 or less than 0',
-        ),
-        assert(
-          opacity >= 0 && opacity <= 255,
-          'opacity value should be between 0 and 255 inclusive.',
         ) {
     duration = 0;
   }
@@ -127,6 +120,11 @@ class _FloatingBubblesState extends State<FloatingBubbles> {
           random,
           color: widget
               .colorsOfBubbles[_random.nextInt(widget.colorsOfBubbles.length)],
+          opacity: widget.opacity?.min ??
+              70 +
+                  _random.nextInt(
+                    widget.opacity?.max ?? 255 - (widget.opacity?.min ?? 70),
+                  ),
         ),
       );
     }
@@ -160,9 +158,7 @@ class _FloatingBubblesState extends State<FloatingBubbles> {
               return drawBubbles(
                 bubbles: BubbleModel(
                   bubbles: bubbles,
-                  colors: widget.colorsOfBubbles,
                   sizeFactor: widget.sizeFactor,
-                  opacity: widget.opacity,
                   paintingStyle: widget.paintingStyle,
                   strokeWidth: widget.strokeWidth,
                   shape: widget.shape,
@@ -181,9 +177,7 @@ class _FloatingBubblesState extends State<FloatingBubbles> {
                 return drawBubbles(
                   bubbles: BubbleModel(
                     bubbles: bubbles,
-                    colors: widget.colorsOfBubbles,
                     sizeFactor: widget.sizeFactor,
-                    opacity: widget.opacity,
                     paintingStyle: widget.paintingStyle,
                     strokeWidth: widget.strokeWidth,
                     shape: widget.shape,

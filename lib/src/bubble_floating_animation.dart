@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:floating_bubbles/floating_bubbles.dart';
+import 'package:floating_bubbles/src/range.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_animations/simple_animations.dart';
 
@@ -26,7 +27,13 @@ class BubbleFloatingAnimation {
   /// Color of the bubble
   final Color color;
 
-  BubbleFloatingAnimation(this.random, {required this.color}) {
+  final int opacity;
+
+  BubbleFloatingAnimation(
+    this.random, {
+    required this.color,
+    this.opacity = 70,
+  }) {
     _restart();
     _shuffle();
   }
@@ -109,14 +116,8 @@ class BubbleModel extends CustomPainter {
   /// List of all bubbles in the screen at a given time.
   final List<BubbleFloatingAnimation> bubbles;
 
-  /// Colors to use for bubbles.
-  final List<Color> colors;
-
   /// Size factor of the bubble.
   final double sizeFactor;
-
-  /// Opacity of the bubbles.
-  final int opacity;
 
   ///Painting Style of the bubbles.
   final PaintingStyle paintingStyle;
@@ -133,9 +134,7 @@ class BubbleModel extends CustomPainter {
   /// All Fields are Required.
   BubbleModel({
     required this.bubbles,
-    required this.colors,
     required this.sizeFactor,
-    required this.opacity,
     required this.paintingStyle,
     required this.strokeWidth,
     required this.shape,
@@ -146,7 +145,9 @@ class BubbleModel extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     bubbles.forEach((particle) {
       final paint = Paint()
-        ..color = particle.color.withAlpha(opacity)
+        ..color = particle.color.withAlpha(
+          particle.opacity,
+        )
         ..style = paintingStyle
         ..strokeWidth = strokeWidth; //can be from 5 to 15.
       final progress = particle.progress();
